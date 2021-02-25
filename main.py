@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 import pandas as pd
+import sys
 
 sirets = []
 nafs = []
@@ -15,7 +16,7 @@ for i in range(0,len):
     valeurInput = df['siret'][i]
     # Ouvertur de la page Chrome, Démarrage du robot
     driver = webdriver.Chrome('chromedriver.exe')
-    driver.maximize_window()
+
 
     # Lien de la page formulaire
     driver.get('https://www.societe.com/')
@@ -46,7 +47,7 @@ for i in range(0,len):
     #Enregistrement des donnée code naf, taille et capital
     naf = driver.find_element_by_xpath('//*[@id="ape-histo-description"]').text
     tailleEntreprise = driver.find_element_by_xpath('//*[@id="trancheeff-histo-description"]').text
-    capital = print(driver.find_element_by_xpath('//*[@id="capital-histo-description"]').text)
+    capital = driver.find_element_by_xpath('//*[@id="capital-histo-description"]').text
     #ajout dans les tableaux
     sirets.append(str(valeurInput))
     nafs.append(naf)
@@ -65,3 +66,5 @@ for i in range(0,len):
     test.to_csv('updateBySiretAtSocieteCom.csv', sep="|", encoding='cp1252')
 
     driver.close()
+
+sys.exit()
